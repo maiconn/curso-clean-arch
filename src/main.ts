@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import pgp from "pg-promise";
+ import { randomUUID } from 'node:crypto'; // ES Modules
 
 function validateName(name: string) {
     return name.trim().split(" ").length > 1;
@@ -18,7 +19,7 @@ async function main () {
     app.use(express.json());
     
     app.post("/signup", async (req: Request, res: Response) => {
-        const accountId = crypto.randomUUID();
+        const accountId = randomUUID();
         const error = validate(req.body.name);
         if (error) {
             res.json({error});
